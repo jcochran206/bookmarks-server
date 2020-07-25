@@ -2,7 +2,7 @@ const express = require('express')
 const {v4: uuid} = require('uuid')
 const logger = require('../logger')
 const store = require('../store')
-const validUrl =require('valid-url')
+const {isWebUri} =require('valid-url')
 
 const bookmarksRouter = express.Router();
 const bodyParser = express.json();
@@ -26,7 +26,7 @@ bookmarksRouter
       return res.status(400).send(`'rating' must be a number between 0 and 5`)
     }
 
-    if (!validUrl(url)) {
+    if (!isWebUri(url)) {
       logger.error(`Invalid url '${url}' supplied`)
       return res.status(400).send(`'url' must be a valid URL`)
     }
